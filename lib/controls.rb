@@ -36,7 +36,7 @@ module FightingGame
       when :left, :right then @player.walking!
       when :block then @player.blocking!
       when :punch then @player.punch! && @player.punch_damage(@player2)
-      when :kick  then @player.kick!
+      when :kick  then @player.kick! && @player.kick_damage(@player2)
       end
     end
 
