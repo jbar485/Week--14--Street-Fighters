@@ -15,21 +15,30 @@ module FightingGame
 
 
     def draw
-      @backdrop.draw
-      @player1.move_to 100
-      @player2.move_to width - 100 - @player2.width
-      @player1.draw
-      @player2.draw
-    end
+          @backdrop.draw
 
-    def update
-    @controls1.update 0, @player2.left
-    @controls2.update @player1.right, width
-    end
+          @player1.draw
+          @player2.draw
+        end
 
-    def button_down?(char)
-      super char_to_button_id(char)
-    end
+        def update
+          @controls1.update 0, @player2.left
+          @controls2.update @player1.right, width
+        end
 
-  end
-end
+        def button_down(id)
+          @controls1.button_down button_id_to_char(id)
+          @controls2.button_down button_id_to_char(id)
+        end
+
+        def button_up(id)
+          @controls1.button_up button_id_to_char(id)
+          @controls2.button_up button_id_to_char(id)
+        end
+
+        def button_down?(char)
+          super char_to_button_id(char)
+        end
+      end
+
+    end
