@@ -2,4 +2,4 @@ source 'https://rubygems.org'
 
 gem 'rspec'
 gem 'pry'
-gem 'gosu'
+gem 'gosu',  '0.8.7.2'

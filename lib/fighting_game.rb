@@ -2,3 +2,5 @@ module FightingGame
 end
 require "gosu"
 require_relative "game"
+require_relative "backdrop"
+require_relative "player"
