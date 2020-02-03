@@ -6,7 +6,8 @@ module FightingGame
       'd' => :right,
       'q' => :block,
       'e' => :punch,
-      'r' => :kick
+      'r' => :kick,
+      's' => :crouch
     }
 
     PLAYER2 = {
@@ -14,7 +15,8 @@ module FightingGame
       ';' => :right,
       'i' => :block,
       'p' => :punch,
-      '[' => :kick
+      '[' => :kick,
+      'l' => :crouch
     }
 
     def initialize(window, player, num)
@@ -27,15 +29,16 @@ module FightingGame
       case matching_action
       when :left  then @player.move_left  if @player.left > left
       when :right then @player.move_right if @player.right < right
+      when :block then @player.blocking!
+      when :punch then @player.punch!
+      when :kick  then @player.kick!
+      when :crouch  then @player.crouch!
       end
     end
 
     def button_down(key)
       case @keys[key]
       when :left, :right then @player.walking!
-      when :block then @player.blocking!
-      when :punch then @player.punch!
-      when :kick  then @player.kick!
       end
     end
 
