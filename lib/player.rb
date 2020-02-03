@@ -24,10 +24,12 @@ module FightingGame
       if self.flip == true
         if player2.pos_x >= (self.pos_x - 200)
           player2.health -= 10
+          player2.pos_x -= 50 if player2.pos_x > 50
         end
       else
         if self.pos_x >= (player2.pos_x - 200)
           player2.health -= 10
+          player2.pos_x += 50 if player2.pos_x < 650
         end
       end
     end
