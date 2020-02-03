@@ -17,9 +17,10 @@ module FightingGame
       '[' => :kick
     }
 
-    def initialize(window, player, num)
+    def initialize(window, player, player2, num)
       @window = window
       @player = player
+      @player2 = player2
       @keys   = [PLAYER1, PLAYER2][num-1]
     end
 
@@ -34,7 +35,7 @@ module FightingGame
       case @keys[key]
       when :left, :right then @player.walking!
       when :block then @player.blocking!
-      when :punch then @player.punch!
+      when :punch then @player.punch! && @player.punch_damage(@player2)
       when :kick  then @player.kick!
       end
     end
