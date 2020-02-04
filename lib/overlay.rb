@@ -8,17 +8,25 @@ module FightingGame
       @healthbar1 = Healthbar.new player1, @window
       @healthbar2 = Healthbar.new player2, @window
       @time = Gosu::milliseconds
+      @p1name = Gosu::Image.from_text(@window, "#{@player1.name.capitalize}", Gosu.default_font_name, 45)
+      @p2name = Gosu::Image.from_text(@window, "#{@player2.name.capitalize}", Gosu.default_font_name, 45)
+      @p1profile = Gosu::Image.new(@window, "assets/#{@player1.name}/profile.png")
+      @p2profile = Gosu::Image.new(@window, "assets/#{@player2.name}/profile.png")
     end
 
     def draw
       @healthbar1.draw
       @healthbar2.draw
+      @p1name.draw(120, 50, 0)
+      @p2name.draw(600, 50, 0)
+      @p1profile.draw(0, 50, 0)
+      @p2profile.draw(675, 50, 0)
       if @player1.health <= 0
-        text = Gosu::Image.from_text(@window, "#{@player1.name} Wins!", Gosu.default_font_name, 45)
-        text.draw
+        text = Gosu::Image.from_text(@window, "#{@player2.name.capitalize} Wins!", Gosu.default_font_name, 60)
+        text.draw(280,75.5,0)
       elsif @player2.health <= 0
-        text = Gosu::Image.from_text(@window, "#{@player2.name} Wins!", Gosu.default_font_name, 45)
-        text.draw(377.5,277.5,0)
+        text = Gosu::Image.from_text(@window, "#{@player1.name.capitalize} Wins!", Gosu.default_font_name, 60)
+        text.draw(280,75.5,0)
       end
     end
   end
