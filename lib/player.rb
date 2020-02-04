@@ -1,7 +1,7 @@
 module FightingGame
 
   class Player
-    SCALE = 3   # same for all players
+    SCALE = 1   # same for all players
     SPEED = 9
 
     attr_accessor :health, :pos_x, :flip, :status
@@ -27,11 +27,13 @@ module FightingGame
         if player2.pos_x >= (self.pos_x - 200)
           player2.health -= 10
           player2.pos_x -= 50 if player2.pos_x > 50
+          player2.hit!
         end
       else
         if self.pos_x >= (player2.pos_x - 200)
           player2.health -= 10
           player2.pos_x += 50 if player2.pos_x < 650
+          player2.hit!
         end
       end
     end
@@ -41,11 +43,13 @@ module FightingGame
         if player2.pos_x >= (self.pos_x - 200)
           player2.health -= 10
           player2.pos_x -= 150 if player2.pos_x > 50
+          player2.hit!
         end
       else
         if self.pos_x >= (player2.pos_x - 200)
           player2.health -= 10
           player2.pos_x += 150 if player2.pos_x < 650
+            player2.hit!
         end
       end
     end
@@ -63,6 +67,14 @@ module FightingGame
       @tiles.walking!
       @status = 'busy'
     end
+    end
+
+    def hit!
+      @pos_y = 180
+      @tiles.hit! do
+        @busy = false
+        idle!
+      end
     end
 
     def crouch!
@@ -135,7 +147,7 @@ module FightingGame
 
       @tiles.draw(pos_x, @pos_y, 1, scale_x, SCALE)
     end
-
+    
     private
 
     class Tileset < Hash
@@ -146,9 +158,13 @@ module FightingGame
         self[:blocking] = FightingGame::Animation.new(window, "#{name}/blocking")
         self[:punch]    = FightingGame::Animation.new(window, "#{name}/punch")
         self[:kick]     = FightingGame::Animation.new(window, "#{name}/kick")
-        self[:crouch]     = FightingGame::Animation.new(window, "#{name}/crouch")
-
+        self[:crouch]   = FightingGame::Animation.new(window, "#{name}/crouch")
+        self[:hit]      = FightingGame::Animation.new(window, "#{name}/hit")
         idle!
+      end
+
+      def hit!
+        @current_animation = self[:hit]
       end
 
       def idle!
@@ -188,4 +204,5 @@ module FightingGame
 
     end
   end
+
 end
