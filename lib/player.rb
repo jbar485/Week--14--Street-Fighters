@@ -1,7 +1,6 @@
 module FightingGame
 
   class Player
-    SCALE = 1  # same for all players
     SPEED = 9
 
     attr_accessor :health, :pos_x, :flip, :status, :name
@@ -18,9 +17,28 @@ module FightingGame
       @max_y  = window.height
       @status = 'idle'
       @max_y = window.height
-
+      @window = window
+      @scale = 1
       move_to flip ? @max_x - 100 - width : 100
       idle!
+    end
+
+    def character1!
+      @tiles = Tileset.new(@window, 'ken')
+      @scale = 3
+      @name = 'ken'
+    end
+
+    def character2!
+      @tiles = Tileset.new(@window, 'rugal')
+      @scale = 1
+      @name = 'rugal'
+    end
+
+    def character3!
+      @tiles = Tileset.new(@window, 'joe')
+      @scale = 1
+      @name = 'joe'
     end
 
     def punch_damage(player2)
@@ -166,14 +184,14 @@ module FightingGame
     end
 
     def width
-      @tiles.width * SCALE
+      @tiles.width * @scale
     end
 
     def draw
       pos_x   = @pos_x + (@flip ? width : 0)
-      scale_x = SCALE * (@flip ? -1 : 1)
+      scale_x = @scale * (@flip ? -1 : 1)
 
-      @tiles.draw(pos_x, @pos_y, 1, scale_x, SCALE)
+      @tiles.draw(pos_x, @pos_y, 1, scale_x, @scale)
     end
 
     private
@@ -191,6 +209,7 @@ module FightingGame
         self[:knockout] = FightingGame::Animation.new(window, "#{name}/ko")
         idle!
       end
+
 
       def hit!(&callback)
         @current_animation = self[:hit]

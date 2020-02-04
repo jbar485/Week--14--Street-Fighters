@@ -14,6 +14,13 @@ module FightingGame
       @p2profile = Gosu::Image.new(@window, "assets/#{@player2.name}/profile.png")
     end
 
+    def update
+      @p1name = Gosu::Image.from_text(@window, "#{@player1.name.capitalize}", Gosu.default_font_name, 45)
+      @p2name = Gosu::Image.from_text(@window, "#{@player2.name.capitalize}", Gosu.default_font_name, 45)
+      @p1profile = Gosu::Image.new(@window, "assets/#{@player1.name}/profile.png")
+      @p2profile = Gosu::Image.new(@window, "assets/#{@player2.name}/profile.png")
+    end
+
     def draw
       @healthbar1.draw
       @healthbar2.draw

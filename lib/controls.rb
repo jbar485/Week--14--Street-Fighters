@@ -8,7 +8,9 @@ module FightingGame
       'q' => :block,
       'e' => :punch,
       'r' => :kick,
-      's' => :crouch
+      's' => :crouch,
+      '1' => :character1
+
     }
 
     PLAYER2 = {
@@ -17,7 +19,9 @@ module FightingGame
       'i' => :block,
       'p' => :punch,
       '[' => :kick,
-      'l' => :crouch
+      'l' => :crouch,
+      '2' => :character2,
+      '3' => :character3
     }
 
     def initialize(window, player, player2, num)
@@ -35,6 +39,9 @@ module FightingGame
       when :punch then @player.punch!
       when :kick  then @player.kick!
       when :crouch  then @player.crouch!
+      when :character1 then @player.character1!
+      when :character2 then @player.character2!
+      when :character3 then @player.character3!
       end
     end
 

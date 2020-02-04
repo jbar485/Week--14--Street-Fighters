@@ -27,6 +27,7 @@ module FightingGame
     def update
       @controls1.update 0, @player2.left
       @controls2.update @player1.right, width
+      @overlay.update
     end
 
     def button_down(id)
