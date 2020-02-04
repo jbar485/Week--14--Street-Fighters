@@ -4,9 +4,10 @@ module FightingGame
     SCALE = 1   # same for all players
     SPEED = 9
 
-    attr_accessor :health, :pos_x, :flip, :status
+    attr_accessor :health, :pos_x, :flip, :status, :name
 
     def initialize(window, name, flip=false)
+      @name = name
       @tiles = Tileset.new(window, name)
       @pos_y = 180
       @pos_x = 0
