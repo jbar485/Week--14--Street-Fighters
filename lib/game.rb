@@ -17,7 +17,8 @@ module FightingGame
 
 
     def draw
-      @startpage.draw
+      # @startpage.draw
+      @backdrop.draw
       @player1.draw
       @player2.draw
       @overlay.draw

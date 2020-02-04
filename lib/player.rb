@@ -28,12 +28,18 @@ module FightingGame
           player2.health -= 10
           player2.pos_x -= 50 if player2.pos_x > 50
           player2.hit!
+          if player2.health <= 0
+            player2.knockout!
+          end
         end
       else
         if self.pos_x >= (player2.pos_x - 200)
           player2.health -= 10
           player2.pos_x += 50 if player2.pos_x < 650
           player2.hit!
+          if player2.health <= 0
+            player2.knockout!
+          end
         end
       end
     end
@@ -44,12 +50,18 @@ module FightingGame
           player2.health -= 10
           player2.pos_x -= 150 if player2.pos_x > 50
           player2.hit!
+          if player2.health <= 0
+            player2.knockout!
+          end
         end
       else
         if self.pos_x >= (player2.pos_x - 200)
           player2.health -= 10
           player2.pos_x += 150 if player2.pos_x < 650
             player2.hit!
+            if player2.health <= 0
+              player2.knockout!
+            end
 
         end
       end
@@ -60,6 +72,14 @@ module FightingGame
         @tiles.idle!
         @pos_y = 180
         @status = 'idle'
+    end
+
+
+    def knockout!
+      @status = 'busy'
+      @pos_y = 180
+      @tiles.knockout!
+
     end
 
     def walking!
@@ -161,12 +181,17 @@ module FightingGame
         self[:kick]     = FightingGame::Animation.new(window, "#{name}/kick")
         self[:crouch]   = FightingGame::Animation.new(window, "#{name}/crouch")
         self[:hit]      = FightingGame::Animation.new(window, "#{name}/hit")
+        self[:knockout] = FightingGame::Animation.new(window, "#{name}/ko")
         idle!
       end
 
       def hit!(&callback)
         @current_animation = self[:hit]
         @current_animation.play_once &callback
+      end
+
+      def knockout!()
+        @current_animation= self[:knockout]
       end
 
       def idle!
