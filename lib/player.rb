@@ -4,7 +4,7 @@ module FightingGame
     SCALE = 3   # same for all players
     SPEED = 9
 
-    attr_accessor :health, :pos_x, :flip
+    attr_accessor :health, :pos_x, :flip, :status
 
     def initialize(window, name, flip=false)
       @tiles = Tileset.new(window, name)
@@ -15,7 +15,7 @@ module FightingGame
       @max_x = window.width
       @health = 100
       @max_y  = window.height
-
+      @status = 'idle'
       @max_y = window.height
 
       move_to flip ? @max_x - 100 - width : 100
@@ -51,41 +51,57 @@ module FightingGame
     end
 
     def idle!
-      @pos_y = 180
-      return if @busy
-      @tiles.idle!
+        return if @busy
+        @tiles.idle!
+        @pos_y = 180
+        @status = 'idle'
     end
 
     def walking!
+      if @status == 'idle'
       @pos_y = 180
       @tiles.walking!
+      @status = 'busy'
+    end
     end
 
     def crouch!
-      @tiles.crouch!
-      @pos_y = 245
+      if @status == 'idle'
+        @tiles.crouch!
+        @pos_y = 245
+        @status = 'busy'
+      end
     end
 
     def blocking!
-      @pos_y = 180
-      @tiles.blocking!
+      if @status == 'idle'
+        @pos_y = 180
+        @tiles.blocking!
+        @status = 'busy'
+      end
     end
 
     def punch!
-      @busy = true
-      @pos_y = 180
-      @tiles.punch! do
-        @busy = false
-        idle!
+      if @status == 'idle'
+        @busy = true
+        @pos_y = 180
+        @tiles.punch! do
+          @busy = false
+          idle!
+        end
+        @status = 'busy'
       end
     end
 
     def kick!
-      @busy = true
-      @pos_y = 180
-      @tiles.kick! do
-        @busy = false
-        idle!
+      if @status == 'idle'
+        @busy = true
+        @pos_y = 180
+        @tiles.kick! do
+          @busy = false
+          idle!
+        end
+        @status = 'busy'
       end
     end
 
@@ -120,7 +136,7 @@ module FightingGame
       @tiles.draw(pos_x, @pos_y, 1, scale_x, SCALE)
     end
 
-  private
+    private
 
     class Tileset < Hash
 
@@ -140,6 +156,7 @@ module FightingGame
       end
 
       def walking!
+
         @current_animation = self[:walking]
       end
 
