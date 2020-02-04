@@ -77,8 +77,9 @@ module FightingGame
 
     def knockout!
       @status = 'busy'
-      @pos_y = 180
+      @pos_y = 360
       @tiles.knockout!
+
 
     end
 
@@ -143,11 +144,16 @@ module FightingGame
     end
 
     def move_left
+      if self.health >= 1
       @pos_x -= SPEED
+    end
     end
 
     def move_right
+      if self.health >= 1
+
       @pos_x += SPEED
+    end
     end
 
     def left
@@ -191,7 +197,7 @@ module FightingGame
       end
 
       def knockout!()
-        @current_animation= self[:knockout]
+        @current_animation = self[:knockout]
       end
 
       def idle!

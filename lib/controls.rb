@@ -31,7 +31,7 @@ module FightingGame
       case matching_action
       when :left  then @player.move_left  if @player.left > left
       when :right then @player.move_right if @player.right < right
-      when :block then @player.blocking! 
+      when :block then @player.blocking!
       when :punch then @player.punch!
       when :kick  then @player.kick!
       when :crouch  then @player.crouch!
@@ -48,7 +48,9 @@ module FightingGame
     end
 
     def button_up(key)
+      if @player.health >= 1
       @player.idle!
+    end
     end
 
   private
