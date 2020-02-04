@@ -48,54 +48,13 @@ module FightingGame
     def punch_damage(player2)
       if self.flip == true
         if player2.pos_x >= (self.pos_x - 200)
-          player2.health -= 10
-          player2.pos_x -= 50 if player2.pos_x > 50
-          player2.hit!
-          if player2.health <= 0
-            player2.knockout!
-            self.victory!
-            time = Gosu.milliseconds
-            if time == 10000
-              @window.close
-            end
+          if player2.status == 'blocking'
+            player2.health -= 2
+            self.pos_x += 50
           end
-        end
-      else
-        if self.pos_x >= (player2.pos_x - 200)
-          player2.health -= 10
-          player2.pos_x += 50 if player2.pos_x < 650
-          player2.hit!
-          if player2.health <= 0
-            player2.knockout!
-            self.victory!
-            time = Gosu.milliseconds
-            if time == 10000
-              @window.close
-            end
-          end
-        end
-      end
-    end
-
-    def kick_damage(player2)
-      if self.flip == true
-        if player2.pos_x >= (self.pos_x - 200)
-          player2.health -= 10
-          player2.pos_x -= 150 if player2.pos_x > 50
-          player2.hit!
-          if player2.health <= 0
-            player2.knockout!
-            self.victory!
-            time == Gosu.milliseconds
-            if time == 10000
-              @window.close
-            end
-          end
-        end
-      else
-        if self.pos_x >= (player2.pos_x - 200)
-          player2.health -= 10
-          player2.pos_x += 150 if player2.pos_x < 650
+          if player2.status == 'busy' || player2.status == 'idle'
+            player2.health -= 10
+            player2.pos_x -= 50 if player2.pos_x > 50
             player2.hit!
             if player2.health <= 0
               player2.knockout!
@@ -105,16 +64,81 @@ module FightingGame
                 @window.close
               end
             end
+          end
+        end
+      else
+        if self.pos_x >= (player2.pos_x - 200)
+          if player2.status == 'blocking'
+            player2.health -= 2
+            self.pos_x -= 50
+          end
+          if player2.status == 'busy' || player2.status == 'idle'
+            player2.health -= 10
+            player2.pos_x += 50 if player2.pos_x < 650
+            player2.hit!
+            if player2.health <= 0
+              player2.knockout!
+              self.victory!
+              time = Gosu.milliseconds
+              if time == 10000
+                @window.close
+              end
+            end
+          end
+        end
+      end
+    end
+
+    def kick_damage(player2)
+      if self.flip == true
+        if player2.pos_x >= (self.pos_x - 200)
+          if player2.status == 'blocking'
+            player2.health -= 2
+            self.pos_x += 50
+          end
+          if player2.status == 'busy' || player2.status == 'idle'
+            player2.health -= 10
+            player2.pos_x -= 150 if player2.pos_x > 50
+            player2.hit!
+            if player2.health <= 0
+              player2.knockout!
+              self.victory!
+              time == Gosu.milliseconds
+              if time == 10000
+                @window.close
+              end
+            end
+          end
+        end
+      else
+        if self.pos_x >= (player2.pos_x - 200)
+          if player2.status == 'blocking'
+            player2.health -= 2
+            self.pos_x -= 50
+          end
+          if player2.status == 'busy' || player2.status == 'idle'
+            player2.health -= 10
+            player2.pos_x += 150 if player2.pos_x < 650
+            player2.hit!
+            if player2.health <= 0
+              player2.knockout!
+              self.victory!
+              time = Gosu.milliseconds
+              if time == 10000
+                @window.close
+              end
+            end
+          end
 
         end
       end
     end
 
     def idle!
-        return if @busy
-        @tiles.idle!
-        @pos_y = 335
-        @status = 'idle'
+      return if @busy
+      @tiles.idle!
+      @pos_y = 335
+      @status = 'idle'
     end
 
 
@@ -134,10 +158,10 @@ module FightingGame
 
     def walking!
       if @status == 'idle'
-      @pos_y = 335
-      @tiles.walking!
-      @status = 'busy'
-    end
+        @pos_y = 335
+        @tiles.walking!
+        @status = 'busy'
+      end
     end
 
     def hit!
@@ -151,8 +175,8 @@ module FightingGame
     def crouch!
       if @status == 'idle'
         @tiles.crouch!
-        @pos_y = 245
-        @status = 'busy'
+        @pos_y = 400
+        @status = 'crouch'
       end
     end
 
@@ -160,7 +184,7 @@ module FightingGame
       if @status == 'idle'
         @pos_y = 335
         @tiles.blocking!
-        @status = 'busy'
+        @status = 'blocking'
       end
     end
 
@@ -194,15 +218,15 @@ module FightingGame
 
     def move_left
       if self.health >= 1
-      @pos_x -= SPEED
-    end
+        @pos_x -= SPEED
+      end
     end
 
     def move_right
       if self.health >= 1
 
-      @pos_x += SPEED
-    end
+        @pos_x += SPEED
+      end
     end
 
     def left
