@@ -131,7 +131,6 @@ module FightingGame
 
       @tiles.draw(pos_x, @pos_y, 1, scale_x, SCALE)
     end
-  end
   private
 
     class Tileset < Hash
@@ -187,4 +186,5 @@ module FightingGame
 
     end
   end
-# end
+
+end

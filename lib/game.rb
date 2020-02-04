@@ -11,40 +11,36 @@ module FightingGame
 
       @controls1 = Controls.new(self, @player1, @player2, 1)
       @controls2 = Controls.new(self, @player2, @player1, 2)
-      # @health1 = Health.new(@player1)
-      # @health2 = Health.new(@player2)
       @overlay = Overlay.new self, @player1, @player2
+      @startpage = Backdrop.new(self, "start.jpg")
     end
 
 
     def draw
-          @backdrop.draw
-
-          @player1.draw
-          @player2.draw
-          # @health1.draw
-          # @health2.draw
-          @overlay.draw
-        end
-
-        def update
-          @controls1.update 0, @player2.left
-          @controls2.update @player1.right, width
-        end
-
-        def button_down(id)
-          @controls1.button_down button_id_to_char(id)
-          @controls2.button_down button_id_to_char(id)
-        end
-
-        def button_up(id)
-          @controls1.button_up button_id_to_char(id)
-          @controls2.button_up button_id_to_char(id)
-        end
-
-        def button_down?(char)
-          super char_to_button_id(char)
-        end
-      end
-
+      @startpage.draw
+      @player1.draw
+      @player2.draw
+      @overlay.draw
     end
+
+    def update
+      @controls1.update 0, @player2.left
+      @controls2.update @player1.right, width
+    end
+
+    def button_down(id)
+      @controls1.button_down button_id_to_char(id)
+      @controls2.button_down button_id_to_char(id)
+    end
+
+    def button_up(id)
+      @controls1.button_up button_id_to_char(id)
+      @controls2.button_up button_id_to_char(id)
+    end
+
+    def button_down?(char)
+      super char_to_button_id(char)
+    end
+  end
+
+end
