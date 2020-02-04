@@ -1,7 +1,7 @@
 module FightingGame
 
   class Player
-    SCALE = 3   # same for all players
+    SCALE = 1  # same for all players
     SPEED = 9
 
     attr_accessor :health, :pos_x, :flip, :status, :name
