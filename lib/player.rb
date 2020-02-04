@@ -8,9 +8,9 @@ module FightingGame
     def initialize(window, name, flip=false)
       @name = name
       @tiles = Tileset.new(window, name)
-      @pos_y = 180
+      @pos_y = 335
       @pos_x = 0
-      @pos_y = 180
+      @pos_y = 335
       @flip  = flip
       @max_x = window.width
       @health = 100
@@ -18,7 +18,11 @@ module FightingGame
       @status = 'idle'
       @max_y = window.height
       @window = window
+
       @scale = 1
+
+
+
       move_to flip ? @max_x - 100 - width : 100
       idle!
     end
@@ -49,6 +53,11 @@ module FightingGame
           player2.hit!
           if player2.health <= 0
             player2.knockout!
+            self.victory!
+            time = Gosu.milliseconds
+            if time == 10000
+              @window.close
+            end
           end
         end
       else
@@ -58,6 +67,11 @@ module FightingGame
           player2.hit!
           if player2.health <= 0
             player2.knockout!
+            self.victory!
+            time = Gosu.milliseconds
+            if time == 10000
+              @window.close
+            end
           end
         end
       end
@@ -71,6 +85,11 @@ module FightingGame
           player2.hit!
           if player2.health <= 0
             player2.knockout!
+            self.victory!
+            time == Gosu.milliseconds
+            if time == 10000
+              @window.close
+            end
           end
         end
       else
@@ -80,6 +99,11 @@ module FightingGame
             player2.hit!
             if player2.health <= 0
               player2.knockout!
+              self.victory!
+              time = Gosu.milliseconds
+              if time == 10000
+                @window.close
+              end
             end
 
         end
@@ -89,7 +113,7 @@ module FightingGame
     def idle!
         return if @busy
         @tiles.idle!
-        @pos_y = 180
+        @pos_y = 335
         @status = 'idle'
     end
 
@@ -102,16 +126,22 @@ module FightingGame
 
     end
 
+    def victory!
+      @status = 'busy'
+      @pos_y = 335
+      @tiles.victory!
+    end
+
     def walking!
       if @status == 'idle'
-      @pos_y = 180
+      @pos_y = 335
       @tiles.walking!
       @status = 'busy'
     end
     end
 
     def hit!
-      @pos_y = 180
+      @pos_y = 335
       @tiles.hit! do
         @busy = false
         idle!
@@ -128,7 +158,7 @@ module FightingGame
 
     def blocking!
       if @status == 'idle'
-        @pos_y = 180
+        @pos_y = 335
         @tiles.blocking!
         @status = 'busy'
       end
@@ -137,7 +167,7 @@ module FightingGame
     def punch!
       if @status == 'idle'
         @busy = true
-        @pos_y = 180
+        @pos_y = 335
         @tiles.punch! do
           @busy = false
           idle!
@@ -149,7 +179,7 @@ module FightingGame
     def kick!
       if @status == 'idle'
         @busy = true
-        @pos_y = 180
+        @pos_y = 335
         @tiles.kick! do
           @busy = false
           idle!
@@ -207,8 +237,15 @@ module FightingGame
         self[:crouch]   = FightingGame::Animation.new(window, "#{name}/crouch")
         self[:hit]      = FightingGame::Animation.new(window, "#{name}/hit")
         self[:knockout] = FightingGame::Animation.new(window, "#{name}/ko")
+        self[:victory] = FightingGame::Animation.new(window, "#{name}/victory")
         idle!
       end
+
+
+      def victory!
+        @current_animation = self[:victory]
+      end
+
 
 
       def hit!(&callback)
