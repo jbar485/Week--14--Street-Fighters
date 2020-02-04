@@ -50,6 +50,7 @@ module FightingGame
           player2.health -= 10
           player2.pos_x += 150 if player2.pos_x < 650
             player2.hit!
+
         end
       end
     end
@@ -147,7 +148,7 @@ module FightingGame
 
       @tiles.draw(pos_x, @pos_y, 1, scale_x, SCALE)
     end
-    
+
     private
 
     class Tileset < Hash
@@ -163,8 +164,9 @@ module FightingGame
         idle!
       end
 
-      def hit!
+      def hit!(&callback)
         @current_animation = self[:hit]
+        @current_animation.play_once &callback
       end
 
       def idle!
