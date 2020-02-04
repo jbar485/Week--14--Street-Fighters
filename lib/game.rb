@@ -9,8 +9,11 @@ module FightingGame
       @player1 = Player.new(self,"ryu", false)
       @player2 = Player.new(self, "ken", true)
 
-      @controls1 = Controls.new(self, @player1, 1)
-      @controls2 = Controls.new(self, @player2, 2)
+      @controls1 = Controls.new(self, @player1, @player2, 1)
+      @controls2 = Controls.new(self, @player2, @player1, 2)
+      # @health1 = Health.new(@player1)
+      # @health2 = Health.new(@player2)
+      @overlay = Overlay.new self, @player1, @player2
     end
 
 
@@ -19,6 +22,9 @@ module FightingGame
 
           @player1.draw
           @player2.draw
+          # @health1.draw
+          # @health2.draw
+          @overlay.draw
         end
 
         def update

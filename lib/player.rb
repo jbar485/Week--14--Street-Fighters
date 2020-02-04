@@ -4,16 +4,50 @@ module FightingGame
     SCALE = 3   # same for all players
     SPEED = 9
 
+    attr_accessor :health, :pos_x, :flip
+
     def initialize(window, name, flip=false)
       @tiles = Tileset.new(window, name)
       @pos_y = 180
       @pos_x = 0
+      @pos_y = 180
       @flip  = flip
       @max_x = window.width
+      @health = 100
+      @max_y  = window.height
+
       @max_y = window.height
 
       move_to flip ? @max_x - 100 - width : 100
       idle!
+    end
+
+    def punch_damage(player2)
+      if self.flip == true
+        if player2.pos_x >= (self.pos_x - 200)
+          player2.health -= 10
+          player2.pos_x -= 50 if player2.pos_x > 50
+        end
+      else
+        if self.pos_x >= (player2.pos_x - 200)
+          player2.health -= 10
+          player2.pos_x += 50 if player2.pos_x < 650
+        end
+      end
+    end
+
+    def kick_damage(player2)
+      if self.flip == true
+        if player2.pos_x >= (self.pos_x - 200)
+          player2.health -= 10
+          player2.pos_x -= 150 if player2.pos_x > 50
+        end
+      else
+        if self.pos_x >= (player2.pos_x - 200)
+          player2.health -= 10
+          player2.pos_x += 150 if player2.pos_x < 650
+        end
+      end
     end
 
     def idle!
