@@ -15,6 +15,7 @@ module FightingGame
       @start = Gosu::Sample.new("assets/sound/start.wav")
       @win = Gosu::Sample.new("assets/sound/win.wav")
       @block = Gosu::Sample.new("assets/sound/block.wav")
+      @special_sound = Gosu::Sample.new("assets/sound/29H.wav")
       @tiles = Tileset.new(window, name)
       @pos_y = 335
       @pos_x = 0
@@ -81,6 +82,8 @@ module FightingGame
           if player2.status == 'busy' || player2.status == 'idle'
             hit = Concurrent::ScheduledTask.new(0.6)do
             player2.hit!
+            @special_sound.play
+            @hit.play
             player2.health -= 25
             player2.pos_x -= 100 if player2.pos_x > 50
             if player2.health <= 0
@@ -104,6 +107,7 @@ module FightingGame
             player2.pos_x += 50 if player2.pos_x < 650
             hit = Concurrent::ScheduledTask.new(0.6)do
             player2.hit!
+            @special_sound.play
             @hit.play
             player2.health -= 25
             if player2.health <= 0

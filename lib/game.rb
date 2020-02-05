@@ -6,6 +6,8 @@ module FightingGame
       self.caption = 'Figther'
       @start =  Gosu::Sample.new("assets/sound/start.wav")
       @start.play
+      @music = Gosu::Song.new("assets/music/#{["fight2", "fight1", "fight_theme"].sample}.mp3")
+      @music.volume = 0.4
       @backdrop = Backdrop.new(self, "/Cover.png")
       @player1 = Player.new(self,"crimsaur", false)
       @player2 = Player.new(self, "poolio", true)
@@ -23,6 +25,7 @@ module FightingGame
         @player2.draw
         @overlay.draw
         @backdrop  = Backdrop.new(self, "battlebrawl_backdrop.png")
+        @music.play
       end
     end
 
