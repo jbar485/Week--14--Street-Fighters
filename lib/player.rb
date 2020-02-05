@@ -105,6 +105,11 @@ module FightingGame
               @ko_sound.play
               @knockout_sound.play
               @win.play
+              sound = Concurrent::ScheduledTask.new(2)do
+              await = Gosu::Sample.new("assets/sound/return.wav")
+              await.play
+            end
+            sound.execute
             end
           end
           hit.execute
@@ -137,6 +142,11 @@ module FightingGame
               @ko_sound.play
               @knockout_sound.play
               @win.play
+              sound = Concurrent::ScheduledTask.new(2)do
+              await = Gosu::Sample.new("assets/sound/return.wav")
+              await.play
+            end
+            sound.execute
             end
           end
           hit.execute
@@ -181,6 +191,11 @@ module FightingGame
               @ko_sound.play
               @knockout_sound.play
               @win.play
+              sound = Concurrent::ScheduledTask.new(2)do
+              await = Gosu::Sample.new("assets/sound/return.wav")
+              await.play
+            end
+            sound.execute
             end
           end
           hit.execute
@@ -214,6 +229,11 @@ module FightingGame
               @ko_sound.play
               @knockout_sound.play
               @win.play
+              sound = Concurrent::ScheduledTask.new(2)do
+              await = Gosu::Sample.new("assets/sound/return.wav")
+              await.play
+            end
+            sound.execute
             end
           end
           hit.execute
@@ -252,6 +272,11 @@ module FightingGame
               @ko_sound.play
               @knockout_sound.play
               @win.play
+              sound = Concurrent::ScheduledTask.new(2)do
+              await = Gosu::Sample.new("assets/sound/return.wav")
+              await.play
+            end
+            sound.execute
             end
           end
           hit.execute
@@ -285,6 +310,11 @@ module FightingGame
               @ko_sound.play
               @knockout_sound.play
               @win.play
+              sound = Concurrent::ScheduledTask.new(2)do
+              await = Gosu::Sample.new("assets/sound/return.wav")
+              await.play
+            end
+            sound.execute
             end
           end
           hit.execute
