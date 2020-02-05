@@ -3,7 +3,7 @@ module FightingGame
   class Player
     SPEED = 9
 
-    attr_accessor :health, :pos_x, :flip, :status, :name
+    attr_accessor :health, :pos_x, :flip, :status, :name, :ex_meter
 
     def initialize(window, name, flip=false)
       @name = name
@@ -18,7 +18,7 @@ module FightingGame
       @status = 'idle'
       @max_y = window.height
       @window = window
-
+      @ex_meter = 10
       @scale = 1
 
 
