@@ -72,9 +72,15 @@ module FightingGame
       return if width <= 0
       x = @player.flip == false ? 20: @window.width - width - 20
       y = 20
+      if @player.ex_meter == 50
+        color = Gosu::Color::CYAN
+      @window.draw_quad(x-5, y+547, Gosu::Color::BLACK, x+5+width, y+547, Gosu::Color::BLACK, x+5+width, 2*y+560, Gosu::Color::BLACK, x-5, 2*y+560, Gosu::Color::BLACK, 1)
+      @window.draw_quad(x, y+550, color, x + width, y+550, color, x+width, 3*y+537, color, x, 3*y+537, color, 1)
+    else
       color = Gosu::Color::GREEN
       @window.draw_quad(x-5, y+547, Gosu::Color::BLACK, x+5+width, y+547, Gosu::Color::BLACK, x+5+width, 2*y+560, Gosu::Color::BLACK, x-5, 2*y+560, Gosu::Color::BLACK, 1)
       @window.draw_quad(x, y+550, color, x + width, y+550, color, x+width, 3*y+537, color, x, 3*y+537, color, 1)
+    end
 
 
 

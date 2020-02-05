@@ -14,6 +14,16 @@ module FightingGame
       @controls1 = Controls.new(self, @player1, @player2, 1)
       @controls2 = Controls.new(self, @player2, @player1, 2)
       @overlay = Overlay.new self, @player1, @player2
+      ready = Concurrent::ScheduledTask.new(1.5)do
+      sound = Gosu::Sample.new("assets/sound/#{['are you ready', 'heat', 'prepare'].sample}.wav")
+      sound.play
+      end
+      engage = Concurrent::ScheduledTask.new(3)do
+      sound = Gosu::Sample.new("assets/sound/engage.wav")
+      sound.play
+    end
+      ready.execute
+      engage.execute
     end
 
 

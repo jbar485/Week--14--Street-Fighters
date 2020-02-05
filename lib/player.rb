@@ -14,6 +14,8 @@ module FightingGame
       @playerchoose = Gosu::Sample.new("assets/sound/playerchoose.wav")
       @start = Gosu::Sample.new("assets/sound/start.wav")
       @win = Gosu::Sample.new("assets/sound/win.wav")
+      @knockout_sound = Gosu::Sample.new("assets/sound/knockout.wav")
+      @ko_sound = Gosu::Sample.new("assets/sound/ko.wav")
       @block = Gosu::Sample.new("assets/sound/block.wav")
       @ex_hit= Gosu::Sample.new("assets/sound/ex_hit.wav")
       @ex_full = Gosu::Sample.new("assets/sound/ex_full.wav")
@@ -86,6 +88,8 @@ module FightingGame
           end
           if player2.status == 'busy' || player2.status == 'idle'
             @ex_start.play
+            sound = Gosu::Sample.new("assets/sound/specials/special#{["1","2",'3','4','5','6','7','8','9','10','11','12','13','14','15','16','17'].sample}.wav")
+            sound.play
             @move_names = ['Shoryuken', 'Haduken', 'Sonic Boom', 'Tiger Upercut', 'Spinning Bird Kick', 'Electric Wind God Fist', 'Tiger Knee', 'Raging Demon Fist', 'Tatsumaki Senpuu Kyaku'].sample
             sleep(0.5)
             hit = Concurrent::ScheduledTask.new(0.6)do
@@ -98,6 +102,8 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @ko_sound.play
+              @knockout_sound.play
               @win.play
             end
           end
@@ -115,6 +121,8 @@ module FightingGame
           end
           if player2.status == 'busy' || player2.status == 'idle'
             @ex_start.play
+            sound = Gosu::Sample.new("assets/sound/specials/special#{["1","2",'3','4','5','6','7','8','9','10','11','12','13','14','15','16','17'].sample}.wav")
+            sound.play
               @move_names = ['Shoryuken', 'Haduken', 'Sonic Boom', 'Tiger Upercut', 'Spinning Bird Kick', 'Electric Wind God Fist', 'Tiger Knee', 'Raging Demon Fist', 'Tatsumaki Senpuu Kyaku'].sample
             sleep(0.5)
             player2.pos_x += 50 if player2.pos_x < 650
@@ -126,6 +134,8 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @ko_sound.play
+              @knockout_sound.play
               @win.play
             end
           end
@@ -154,12 +164,22 @@ module FightingGame
             hit = Concurrent::ScheduledTask.new(0.2)do
             player2.hit!
             @hit.play
+            number = rand(1..10)
+            if number == 2
+              sound = Gosu::Sample.new("assets/sound/toasty.mp3")
+              sound.play
+            end
             player2.health -= 10
-            self.ex_meter += 10 if self.ex_meter < 100
+            if self.ex_meter == 40
+              @ex_full.play
+            end
+            self.ex_meter += 10 if self.ex_meter < 50
             player2.pos_x -= 50 if player2.pos_x > 50
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @ko_sound.play
+              @knockout_sound.play
               @win.play
             end
           end
@@ -178,11 +198,21 @@ module FightingGame
             hit = Concurrent::ScheduledTask.new(0.2)do
             player2.hit!
             @hit.play
+            number = rand(1..10)
+            if number == 2
+              sound = Gosu::Sample.new("assets/sound/toasty.mp3")
+              sound.play
+            end
             player2.health -= 10
-            self.ex_meter += 10 if self.ex_meter < 100
+            if self.ex_meter == 40
+              @ex_full.play
+            end
+            self.ex_meter += 10 if self.ex_meter < 50
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @ko_sound.play
+              @knockout_sound.play
               @win.play
             end
           end
@@ -205,12 +235,22 @@ module FightingGame
             hit = Concurrent::ScheduledTask.new(0.2)do
             player2.hit!
             @hit.play
+            number = rand(1..10)
+            if number == 2
+              sound = Gosu::Sample.new("assets/sound/toasty.mp3")
+              sound.play
+            end
             player2.pos_x -= 150 if player2.pos_x > 50
             player2.health -= 10
-            self.ex_meter += 10 if self.ex_meter < 100
+            if self.ex_meter == 40
+              @ex_full.play
+            end
+            self.ex_meter += 10 if self.ex_meter < 50
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @ko_sound.play
+              @knockout_sound.play
               @win.play
             end
           end
@@ -228,12 +268,22 @@ module FightingGame
             hit = Concurrent::ScheduledTask.new(0.2)do
             player2.hit!
             @hit.play
+            number = rand(1..10)
+            if number == 2
+              sound = Gosu::Sample.new("assets/sound/toasty.mp3")
+              sound.play
+            end
             player2.pos_x += 150 if player2.pos_x < 650
             player2.health -= 10
-            self.ex_meter += 10 if self.ex_meter < 100
+            if self.ex_meter == 40
+              @ex_full.play
+            end
+            self.ex_meter += 10 if self.ex_meter < 50
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @ko_sound.play
+              @knockout_sound.play
               @win.play
             end
           end
