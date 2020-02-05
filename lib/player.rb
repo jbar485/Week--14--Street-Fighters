@@ -1,6 +1,7 @@
 module FightingGame
 
   class Player
+    require 'concurrent'
     SPEED = 9
 
     attr_accessor :health, :pos_x, :flip, :status, :name, :ex_meter
@@ -70,13 +71,16 @@ module FightingGame
             self.pos_x += 50
           end
           if player2.status == 'busy' || player2.status == 'idle'
-            player2.health -= 25
-            player2.pos_x -= 50 if player2.pos_x > 50
+            hit = Concurrent::ScheduledTask.new(0.6)do
             player2.hit!
+            player2.health -= 25
+            player2.pos_x -= 100 if player2.pos_x > 50
             if player2.health <= 0
               player2.knockout!
               self.victory!
             end
+          end
+          hit.execute
           end
         end
       else
@@ -86,13 +90,15 @@ module FightingGame
             self.pos_x -= 50
           end
           if player2.status == 'busy' || player2.status == 'idle'
+            hit = Concurrent::ScheduledTask.new(0.6)do
+            player2.hit!
             player2.health -= 25
             player2.pos_x += 50 if player2.pos_x < 650
-            player2.hit!
             if player2.health <= 0
               player2.knockout!
               self.victory!
-
+            end
+            hit.execute
             end
           end
         end
@@ -112,15 +118,17 @@ module FightingGame
             self.pos_x += 50
           end
           if player2.status == 'busy' || player2.status == 'idle'
-            player2.health -= 10
-            player2.pos_x -= 50 if player2.pos_x > 50
+            hit = Concurrent::ScheduledTask.new(0.2)do
             player2.hit!
+            player2.health -= 10
             self.ex_meter += 10 if self.ex_meter < 100
+            player2.pos_x -= 50 if player2.pos_x > 50
             if player2.health <= 0
               player2.knockout!
               self.victory!
-              time = Gosu.milliseconds
             end
+          end
+          hit.execute
           end
         end
       else
@@ -130,14 +138,17 @@ module FightingGame
             self.pos_x -= 50
           end
           if player2.status == 'busy' || player2.status == 'idle'
-            player2.health -= 10
             player2.pos_x += 50 if player2.pos_x < 650
+            hit = Concurrent::ScheduledTask.new(0.2)do
             player2.hit!
+            player2.health -= 10
             self.ex_meter += 10 if self.ex_meter < 100
             if player2.health <= 0
               player2.knockout!
               self.victory!
             end
+          end
+          hit.execute
           end
         end
       end
@@ -151,14 +162,17 @@ module FightingGame
             self.pos_x += 50
           end
           if player2.status == 'busy' || player2.status == 'idle'
-            player2.health -= 10
-            player2.pos_x -= 150 if player2.pos_x > 50
+            hit = Concurrent::ScheduledTask.new(0.2)do
             player2.hit!
+            player2.pos_x -= 150 if player2.pos_x > 50
+            player2.health -= 10
             self.ex_meter += 10 if self.ex_meter < 100
             if player2.health <= 0
               player2.knockout!
               self.victory!
             end
+          end
+          hit.execute
           end
         end
       else
@@ -168,14 +182,17 @@ module FightingGame
             self.pos_x -= 50
           end
           if player2.status == 'busy' || player2.status == 'idle'
-            player2.health -= 10
-            player2.pos_x += 150 if player2.pos_x < 650
+            hit = Concurrent::ScheduledTask.new(0.2)do
             player2.hit!
+            player2.pos_x += 150 if player2.pos_x < 650
+            player2.health -= 10
             self.ex_meter += 10 if self.ex_meter < 100
             if player2.health <= 0
               player2.knockout!
               self.victory!
             end
+          end
+          hit.execute
           end
 
         end
@@ -229,11 +246,14 @@ end
     end
 
     def hit!
+      # hit = Concurrent::ScheduledTask.new(0.4)do
       @pos_y = 335
       @tiles.hit! do
         @busy = false
         idle!
       end
+      # end
+      # hit.execute
     end
 
     def crouch!
