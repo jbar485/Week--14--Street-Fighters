@@ -5,10 +5,10 @@ module FightingGame
       super(800, 600, false)
       self.caption = 'Figther'
       @backdrop  = Backdrop.new(self, "battlebrawl_backdrop.png")
-
-      @player1 = Player.new(self,"rugal", false)
-      @player2 = Player.new(self, "joe", true)
-
+      @player1 = Player.new(self,"joe", false)
+      @player2 = Player.new(self, "rugal", true)
+      @start =  Gosu::Sample.new("assets/sound/start.wav")
+      @start.play
       @controls1 = Controls.new(self, @player1, @player2, 1)
       @controls2 = Controls.new(self, @player2, @player1, 2)
       @overlay = Overlay.new self, @player1, @player2
