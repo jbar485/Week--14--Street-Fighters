@@ -3,25 +3,28 @@ module FightingGame
   class Player
     SPEED = 9
 
-    attr_accessor :health, :pos_x, :flip, :status, :name, :ex_meter
+    attr_accessor :health, :pos_x, :flip, :status, :name, :ex_meter, :start
 
     def initialize(window, name, flip=false)
       @name = name
+      @hit = Gosu::Sample.new("assets/sound/hit.wav")
+      @kick = Gosu::Sample.new("assets/sound/kick.wav")
+      @miss = Gosu::Sample.new("assets/sound/miss.wav")
+      @playerchoose = Gosu::Sample.new("assets/sound/playerchoose.wav")
+      @start = Gosu::Sample.new("assets/sound/start.wav")
+      @win = Gosu::Sample.new("assets/sound/win.wav")
+      @block = Gosu::Sample.new("assets/sound/block.wav")    
       @tiles = Tileset.new(window, name)
       @pos_y = 335
       @pos_x = 0
-      @pos_y = 335
       @flip  = flip
       @max_x = window.width
       @health = 100
       @max_y  = window.height
       @status = 'idle'
-      @max_y = window.height
       @window = window
       @ex_meter = 10
       @scale = 1
-
-
 
       move_to flip ? @max_x - 100 - width : 100
       idle!
@@ -31,48 +34,56 @@ module FightingGame
       @tiles = Tileset.new(@window, 'ken')
       @scale = 3
       @name = 'ken'
+      @playerchoose.play
+
     end
 
     def character2!
       @tiles = Tileset.new(@window, 'rugal')
       @scale = 1
       @name = 'rugal'
+      @playerchoose.play
     end
 
     def character3!
       @tiles = Tileset.new(@window, 'joe')
-      @scale = 1
+      @scale = 1.1
       @name = 'joe'
+      @playerchoose.play
     end
 
     def character4!
       @tiles = Tileset.new(@window, 'crimsaur')
-      @scale = 3
+      @scale = 5
       @name = 'crimsaur'
-      @pos_x = 0
-      @pos_y = 100
+      @playerchoose.play
     end
 
     def character5!
       @tiles = Tileset.new(@window, 'poolio')
-      @scale = 1
+      @scale = 5
       @name = 'poolio'
+      @playerchoose.play
     end
 
     def punch_damage(player2)
       if self.flip == true
+        @miss.play
         if player2.pos_x >= (self.pos_x - 200)
           if player2.status == 'blocking'
             player2.health -= 2
             self.pos_x += 50
+            @block.play
           end
           if player2.status == 'busy' || player2.status == 'idle'
             player2.health -= 10
             player2.pos_x -= 50 if player2.pos_x > 50
             player2.hit!
+            @hit.play
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
               time = Gosu.milliseconds
               if time == 10000
                 @window.close
@@ -85,14 +96,17 @@ module FightingGame
           if player2.status == 'blocking'
             player2.health -= 2
             self.pos_x -= 50
+            @block.play
           end
           if player2.status == 'busy' || player2.status == 'idle'
             player2.health -= 10
             player2.pos_x += 50 if player2.pos_x < 650
             player2.hit!
+            @hit.play
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
               time = Gosu.milliseconds
               if time == 10000
                 @window.close
@@ -105,18 +119,22 @@ module FightingGame
 
     def kick_damage(player2)
       if self.flip == true
+        @miss.play
         if player2.pos_x >= (self.pos_x - 200)
           if player2.status == 'blocking'
             player2.health -= 2
             self.pos_x += 50
+            @block.play
           end
           if player2.status == 'busy' || player2.status == 'idle'
             player2.health -= 10
             player2.pos_x -= 150 if player2.pos_x > 50
             player2.hit!
+            @kick.play
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
               time == Gosu.milliseconds
               if time == 10000
                 @window.close
@@ -129,14 +147,17 @@ module FightingGame
           if player2.status == 'blocking'
             player2.health -= 2
             self.pos_x -= 50
+            @block.play
           end
           if player2.status == 'busy' || player2.status == 'idle'
             player2.health -= 10
             player2.pos_x += 150 if player2.pos_x < 650
             player2.hit!
+            @kick.play
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
               time = Gosu.milliseconds
               if time == 10000
                 @window.close
