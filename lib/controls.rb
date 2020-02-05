@@ -11,7 +11,8 @@ module FightingGame
       's' => :crouch,
       'z' => :special,
       '1' => :character3,
-      '2' => :character4
+      '2' => :character4,
+      '3' => :character6
 
     }
 
@@ -48,6 +49,7 @@ module FightingGame
       when :character3 then @player.character3!
       when :character4 then @player.character4!
       when :character5 then @player.character5!
+      when :character6 then @player.character6!
       end
     end
 

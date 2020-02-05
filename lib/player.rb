@@ -42,8 +42,15 @@ module FightingGame
       @scale = 3
       @name = 'ken'
       @playerchoose.play
-
     end
+
+    def character6!
+      @tiles = Tileset.new(@window, 'batman', self)
+      @scale = 2.3
+      @name = 'batman'
+      @playerchoose.play
+    end
+
 
     def character2!
       @tiles = Tileset.new(@window, 'rugal', self)
