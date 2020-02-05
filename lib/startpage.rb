@@ -1,20 +1,19 @@
-module FightingGame
+module Startpage
 
-  class Startpage < Gosu::Image
+  class Startpage < Gosu::Window
 
-  def initialize(window, filename, status)
-    super(window, "assets/#{filename}", false)
-    @status = status
-    @scale = window.height / height
-    @bg_x  = -(width * @scale - window.width) / 2
+  def initialize()
+    super(800, 600, false)
+    @image = Gosu::Image.new(self, "assets/Cover.png")
+    @start =  Gosu::Sample.new("assets/sound/start.wav")
+    @start.play
   end
 
 
 
 
   def draw
-    super @bg_x, 0, 0, @scale, @scale
-
+    @image.draw(0,0,0)
   end
 
 end

@@ -15,6 +15,10 @@ module FightingGame
       @start = Gosu::Sample.new("assets/sound/start.wav")
       @win = Gosu::Sample.new("assets/sound/win.wav")
       @block = Gosu::Sample.new("assets/sound/block.wav")
+      @ex_hit= Gosu::Sample.new("assets/sound/ex_hit.wav")
+      @ex_full = Gosu::Sample.new("assets/sound/ex_full.wav")
+      @ex_start = Gosu::Sample.new("assets/sound/ex_start.wav")
+      @move_names = ''
       @tiles = Tileset.new(window, name)
       @pos_y = 335
       @crouch_y = 400
@@ -27,6 +31,7 @@ module FightingGame
       @window = window
       @ex_meter = 10
       @scale = 1
+      
 
       move_to flip ? @max_x - 100 - width : 100
       idle!
@@ -72,6 +77,7 @@ module FightingGame
 
 
     def special_damage(player2)
+      @miss.play
       if self.flip == true
         if player2.pos_x >= (self.pos_x - 200)
           if player2.status == 'blocking'
@@ -79,35 +85,52 @@ module FightingGame
             self.pos_x += 50
           end
           if player2.status == 'busy' || player2.status == 'idle'
+            @ex_start.play
+            @move_names = ['Shoryuken', 'Haduken', 'Sonic Boom', 'Tiger Upercut', 'Spinning Bird Kick', 'Electric Wind God Fist', 'Tiger Knee', 'Raging Demon Fist', 'Tatsumaki Senpuu Kyaku'].sample
+            sleep(0.5)
             hit = Concurrent::ScheduledTask.new(0.6)do
+            @move_names=''
             player2.hit!
+            @ex_hit.play
+            # @hit.play
             player2.health -= 25
             player2.pos_x -= 100 if player2.pos_x > 50
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
           end
           hit.execute
+          @ex_move_name = Gosu::Image.from_text(@window, "", Gosu.default_font_name, 45)
           end
         end
       else
+        @miss.play
         if self.pos_x >= (player2.pos_x - 200)
           if player2.status == 'blocking'
             player2.health -= 2
             self.pos_x -= 50
+            @block.play
           end
           if player2.status == 'busy' || player2.status == 'idle'
-            hit = Concurrent::ScheduledTask.new(0.6)do
-            player2.hit!
-            player2.health -= 25
+            @ex_start.play
+              @move_names = ['Shoryuken', 'Haduken', 'Sonic Boom', 'Tiger Upercut', 'Spinning Bird Kick', 'Electric Wind God Fist', 'Tiger Knee', 'Raging Demon Fist', 'Tatsumaki Senpuu Kyaku'].sample
+            sleep(0.5)
             player2.pos_x += 50 if player2.pos_x < 650
+            hit = Concurrent::ScheduledTask.new(0.6)do
+            @move_names = ''
+            player2.hit!
+            @ex_hit.play
+            player2.health -= 25
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
-            hit.execute
-            end
+          end
+          hit.execute
+          @ex_move_name = Gosu::Image.from_text(@window, "", Gosu.default_font_name, 45)
           end
         end
       end
@@ -119,8 +142,8 @@ module FightingGame
 
 
     def punch_damage(player2)
+      @miss.play
       if self.flip == true
-        @miss.play
         if player2.pos_x >= (self.pos_x - 200)
           if player2.status == 'blocking'
             player2.health -= 2
@@ -137,6 +160,7 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
           end
           hit.execute
@@ -159,6 +183,7 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
           end
           hit.execute
@@ -168,8 +193,8 @@ module FightingGame
     end
 
     def kick_damage(player2)
+      @miss.play
       if self.flip == true
-        @miss.play
         if player2.pos_x >= (self.pos_x - 200)
           if player2.status == 'blocking'
             player2.health -= 2
@@ -186,6 +211,7 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
           end
           hit.execute
@@ -208,6 +234,7 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
           end
           hit.execute
@@ -219,6 +246,7 @@ module FightingGame
 
 def special!
   if @ex_meter >= 20
+    @ex_move_name = Gosu::Image.from_text(@window, "Shoryuken", Gosu.default_font_name, 45)
     @ex_meter -= 20
   if @status == 'idle'
     @busy = true
@@ -263,14 +291,11 @@ end
     end
 
     def hit!
-      # hit = Concurrent::ScheduledTask.new(0.4)do
       @pos_y = 335
       @tiles.hit! do
         @busy = false
         idle!
       end
-      # end
-      # hit.execute
     end
 
     def crouch!
@@ -345,7 +370,8 @@ end
     def draw
       pos_x   = @pos_x + (@flip ? width : 0)
       scale_x = @scale * (@flip ? -1 : 1)
-
+      ex_move_name = Gosu::Image.from_text(@window, "#{@move_names}", Gosu.default_font_name, 45)
+      ex_move_name.draw(250, 200, 0)
       @tiles.draw(pos_x, @pos_y, 1, scale_x, @scale)
     end
 
