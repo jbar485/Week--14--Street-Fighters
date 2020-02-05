@@ -19,7 +19,7 @@ module FightingGame
       @ex_full = Gosu::Sample.new("assets/sound/ex_full.wav")
       @ex_start = Gosu::Sample.new("assets/sound/ex_start.wav")
       @move_names = ''
-      @tiles = Tileset.new(window, name)
+      @tiles = Tileset.new(window, name, self)
       @pos_y = 335
       @crouch_y = 400
       @pos_x = 0
@@ -38,7 +38,7 @@ module FightingGame
     end
 
     def character1!
-      @tiles = Tileset.new(@window, 'ken')
+      @tiles = Tileset.new(@window, 'ken', self)
       @scale = 3
       @name = 'ken'
       @playerchoose.play
@@ -46,28 +46,28 @@ module FightingGame
     end
 
     def character2!
-      @tiles = Tileset.new(@window, 'rugal')
+      @tiles = Tileset.new(@window, 'rugal', self)
       @scale = 1
       @name = 'rugal'
       @playerchoose.play
     end
 
     def character3!
-      @tiles = Tileset.new(@window, 'joe')
+      @tiles = Tileset.new(@window, 'joe', self)
       @scale = 1.1
       @name = 'joe'
       @playerchoose.play
     end
 
     def character4!
-      @tiles = Tileset.new(@window, 'crimsaur')
+      @tiles = Tileset.new(@window, 'crimsaur', self)
       @scale = 5
       @name = 'crimsaur'
       @playerchoose.play
     end
 
     def character5!
-      @tiles = Tileset.new(@window, 'poolio')
+      @tiles = Tileset.new(@window, 'poolio', self)
       @scale = 5
       @name = 'poolio'
       @playerchoose.play
@@ -246,7 +246,6 @@ module FightingGame
 
 def special!
   if @ex_meter >= 20
-    @ex_move_name = Gosu::Image.from_text(@window, "Shoryuken", Gosu.default_font_name, 45)
     @ex_meter -= 20
   if @status == 'idle'
     @busy = true
@@ -379,7 +378,8 @@ end
 
     class Tileset < Hash
 
-      def initialize(window, name)
+      def initialize(window, name, player)
+        @player = player
         self[:idle]     = FightingGame::Animation.new(window, "#{name}/idle")
         self[:walking]  = FightingGame::Animation.new(window, "#{name}/walking")
         self[:blocking] = FightingGame::Animation.new(window, "#{name}/blocking")
@@ -400,6 +400,11 @@ end
 
       def special!(&callback)
         @current_animation = self[:special]
+        if @player.name == 'ken'
+        5.times do
+          @player.pos_y -= 15
+        end
+        end
         @current_animation.play_once &callback
       end
 
