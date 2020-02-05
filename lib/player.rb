@@ -4,7 +4,7 @@ module FightingGame
     require 'concurrent'
     SPEED = 9
 
-    attr_accessor :health, :pos_x, :flip, :status, :name, :ex_meter, :start
+    attr_accessor :health, :pos_x, :flip, :status, :name, :ex_meter, :start, :pos_y
 
     def initialize(window, name, flip=false)
       @name = name
@@ -17,6 +17,7 @@ module FightingGame
       @block = Gosu::Sample.new("assets/sound/block.wav")
       @tiles = Tileset.new(window, name)
       @pos_y = 335
+      @crouch_y = 400
       @pos_x = 0
       @flip  = flip
       @max_x = window.width
@@ -211,7 +212,6 @@ module FightingGame
           end
           hit.execute
           end
-
         end
       end
     end
