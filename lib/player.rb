@@ -70,6 +70,7 @@ module FightingGame
             player2.health -= 10
             player2.pos_x -= 50 if player2.pos_x > 50
             player2.hit!
+            self.ex_meter += 10 if self.ex_meter < 100
             if player2.health <= 0
               player2.knockout!
               self.victory!
@@ -90,6 +91,7 @@ module FightingGame
             player2.health -= 10
             player2.pos_x += 50 if player2.pos_x < 650
             player2.hit!
+            self.ex_meter += 10 if self.ex_meter < 100
             if player2.health <= 0
               player2.knockout!
               self.victory!
@@ -114,6 +116,7 @@ module FightingGame
             player2.health -= 10
             player2.pos_x -= 150 if player2.pos_x > 50
             player2.hit!
+            self.ex_meter += 10 if self.ex_meter < 100
             if player2.health <= 0
               player2.knockout!
               self.victory!
@@ -134,6 +137,7 @@ module FightingGame
             player2.health -= 10
             player2.pos_x += 150 if player2.pos_x < 650
             player2.hit!
+            self.ex_meter += 10 if self.ex_meter < 100
             if player2.health <= 0
               player2.knockout!
               self.victory!

@@ -7,8 +7,8 @@ module FightingGame
       @window = window
       @healthbar1 = Healthbar.new player1, @window
       @healthbar2 = Healthbar.new player2, @window
-      # @specialbar2 = SpecialBar.new player2, @window
-      # @specialbar1 = SpecialBar.new player1, @window
+      @specialbar2 = SpecialBar.new player2, @window
+      @specialbar1 = SpecialBar.new player1, @window
       @time = Gosu::milliseconds
       @p1name = Gosu::Image.from_text(@window, "#{@player1.name.capitalize}", Gosu.default_font_name, 45)
       @p2name = Gosu::Image.from_text(@window, "#{@player2.name.capitalize}", Gosu.default_font_name, 45)
@@ -24,8 +24,8 @@ module FightingGame
     end
 
     def draw
-      # @specialbar1.draw
-      # @specialbar2.draw
+      @specialbar1.draw
+      @specialbar2.draw
       @healthbar1.draw
       @healthbar2.draw
       @p1name.draw(120, 50, 0)
@@ -62,21 +62,22 @@ module FightingGame
     end
   end
 
-  # class SpecialBar
-  #   def initialize player, window
-  #     @player = player
-  #     @window = window
-  #   end
-  #   def draw
-  #     width = @player.ex_meter * 3
-  #     return if width <= 0
-  #     x = @player.flip == false ? 20 : @window.width - width - 20
-  #     y = 20
-  #     color = Gosu::Color::GREEN
-  #     Gosu.draw_rect(600, 400, width, 5, color, 0)
-  #
-  #
-  #
-  #   end
-  # end
+  class SpecialBar
+    def initialize player, window
+      @player = player
+      @window = window
+    end
+    def draw
+      width = @player.ex_meter * 3
+      return if width <= 0
+      x = @player.flip == false ? 20: @window.width - width - 20
+      y = 20
+      color = Gosu::Color::GREEN
+      @window.draw_quad(x-5, y+547, Gosu::Color::BLACK, x+5+width, y+547, Gosu::Color::BLACK, x+5+width, 2*y+560, Gosu::Color::BLACK, x-5, 2*y+560, Gosu::Color::BLACK, 1)
+      @window.draw_quad(x, y+550, color, x + width, y+550, color, x+width, 3*y+537, color, x, 3*y+537, color, 1)
+
+
+
+    end
+  end
 end
