@@ -59,6 +59,51 @@ module FightingGame
       @name = 'poolio'
     end
 
+
+
+
+    def special_damage(player2)
+      if self.flip == true
+        if player2.pos_x >= (self.pos_x - 200)
+          if player2.status == 'blocking'
+            player2.health -= 2
+            self.pos_x += 50
+          end
+          if player2.status == 'busy' || player2.status == 'idle'
+            player2.health -= 25
+            player2.pos_x -= 50 if player2.pos_x > 50
+            player2.hit!
+            if player2.health <= 0
+              player2.knockout!
+              self.victory!
+            end
+          end
+        end
+      else
+        if self.pos_x >= (player2.pos_x - 200)
+          if player2.status == 'blocking'
+            player2.health -= 2
+            self.pos_x -= 50
+          end
+          if player2.status == 'busy' || player2.status == 'idle'
+            player2.health -= 25
+            player2.pos_x += 50 if player2.pos_x < 650
+            player2.hit!
+            if player2.health <= 0
+              player2.knockout!
+              self.victory!
+
+            end
+          end
+        end
+      end
+    end
+
+
+
+
+
+
     def punch_damage(player2)
       if self.flip == true
         if player2.pos_x >= (self.pos_x - 200)
@@ -75,9 +120,6 @@ module FightingGame
               player2.knockout!
               self.victory!
               time = Gosu.milliseconds
-              if time == 10000
-                @window.close
-              end
             end
           end
         end
@@ -95,10 +137,6 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
-              time = Gosu.milliseconds
-              if time == 10000
-                @window.close
-              end
             end
           end
         end
@@ -120,10 +158,6 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
-              time == Gosu.milliseconds
-              if time == 10000
-                @window.close
-              end
             end
           end
         end
@@ -141,16 +175,28 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
-              time = Gosu.milliseconds
-              if time == 10000
-                @window.close
-              end
             end
           end
 
         end
       end
     end
+
+
+def special!
+  if @ex_meter >= 20
+    @ex_meter -= 20
+  if @status == 'idle'
+    @busy = true
+    @pos_y = 335
+    @tiles.special! do
+      @busy = false
+      idle!
+    end
+    @status = 'busy'
+  end
+end
+end
 
     def idle!
       return if @busy
@@ -162,7 +208,7 @@ module FightingGame
 
     def knockout!
       @status = 'busy'
-      @pos_y = 360
+      @pos_y = 450
       @tiles.knockout!
 
 
@@ -280,6 +326,7 @@ module FightingGame
         self[:hit]      = FightingGame::Animation.new(window, "#{name}/hit")
         self[:knockout] = FightingGame::Animation.new(window, "#{name}/ko")
         self[:victory] = FightingGame::Animation.new(window, "#{name}/victory")
+        self[:special] = FightingGame::Animation.new(window, "#{name}/special")
         idle!
       end
 
@@ -288,7 +335,10 @@ module FightingGame
         @current_animation = self[:victory]
       end
 
-
+      def special!(&callback)
+        @current_animation = self[:special]
+        @current_animation.play_once &callback
+      end
 
       def hit!(&callback)
         @current_animation = self[:hit]

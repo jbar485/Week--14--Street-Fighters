@@ -9,6 +9,7 @@ module FightingGame
       'e' => :punch,
       'r' => :kick,
       's' => :crouch,
+      'z' => :special,
       '1' => :character3,
       '2' => :character4
 
@@ -21,6 +22,7 @@ module FightingGame
       'p' => :punch,
       '[' => :kick,
       'l' => :crouch,
+      'm' => :special,
       '7' => :character2,
       '8' => :character1,
       '9' => :character5
@@ -54,6 +56,7 @@ module FightingGame
       when :left, :right then @player.walking!
       when :block then @player.blocking!
       when :punch then @player.punch! && @player.punch_damage(@player2)
+      when :special then @player.special! && @player.special_damage(@player2)
       when :kick  then @player.kick! && @player.kick_damage(@player2)
       end
     end
