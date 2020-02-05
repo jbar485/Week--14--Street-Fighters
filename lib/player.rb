@@ -45,6 +45,20 @@ module FightingGame
       @name = 'joe'
     end
 
+    def character4!
+      @tiles = Tileset.new(@window, 'crimsaur')
+      @scale = 3
+      @name = 'crimsaur'
+      @pos_x = 0
+      @pos_y = 100
+    end
+
+    def character5!
+      @tiles = Tileset.new(@window, 'poolio')
+      @scale = 1
+      @name = 'poolio'
+    end
+
     def punch_damage(player2)
       if self.flip == true
         if player2.pos_x >= (self.pos_x - 200)
