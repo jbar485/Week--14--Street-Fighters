@@ -1,27 +1,29 @@
+# require 'concurrent'
 module FightingGame
-
   class Game < Gosu::Window
     def initialize
       super(800, 600, false)
       self.caption = 'Figther'
-      @backdrop  = Backdrop.new(self, "battlebrawl_backdrop.png")
-      @player1 = Player.new(self,"joe", false)
-      @player2 = Player.new(self, "rugal", true)
       @start =  Gosu::Sample.new("assets/sound/start.wav")
       @start.play
+      @backdrop = Backdrop.new(self, "/Cover.png")
+      @player1 = Player.new(self,"crimsaur", false)
+      @player2 = Player.new(self, "poolio", true)
       @controls1 = Controls.new(self, @player1, @player2, 1)
       @controls2 = Controls.new(self, @player2, @player1, 2)
       @overlay = Overlay.new self, @player1, @player2
-      @startpage = Backdrop.new(self, "start.jpg")
     end
 
 
     def draw
       # @startpage.draw
       @backdrop.draw
-      @player1.draw
-      @player2.draw
-      @overlay.draw
+      if Gosu.milliseconds >= 3500
+        @player1.draw
+        @player2.draw
+        @overlay.draw
+        @backdrop  = Backdrop.new(self, "battlebrawl_backdrop.png")
+      end
     end
 
     def update

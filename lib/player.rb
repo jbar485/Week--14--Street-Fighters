@@ -71,6 +71,7 @@ module FightingGame
 
 
     def special_damage(player2)
+      @miss.play
       if self.flip == true
         if player2.pos_x >= (self.pos_x - 200)
           if player2.status == 'blocking'
@@ -85,28 +86,33 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
           end
           hit.execute
           end
         end
       else
+        @miss.play
         if self.pos_x >= (player2.pos_x - 200)
           if player2.status == 'blocking'
             player2.health -= 2
             self.pos_x -= 50
+            @block.play
           end
           if player2.status == 'busy' || player2.status == 'idle'
+            player2.pos_x += 50 if player2.pos_x < 650
             hit = Concurrent::ScheduledTask.new(0.6)do
             player2.hit!
+            @hit.play
             player2.health -= 25
-            player2.pos_x += 50 if player2.pos_x < 650
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
-            hit.execute
-            end
+          end
+          hit.execute
           end
         end
       end
@@ -118,8 +124,8 @@ module FightingGame
 
 
     def punch_damage(player2)
+      @miss.play
       if self.flip == true
-        @miss.play
         if player2.pos_x >= (self.pos_x - 200)
           if player2.status == 'blocking'
             player2.health -= 2
@@ -136,6 +142,7 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
           end
           hit.execute
@@ -158,6 +165,7 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
           end
           hit.execute
@@ -167,8 +175,8 @@ module FightingGame
     end
 
     def kick_damage(player2)
+      @miss.play
       if self.flip == true
-        @miss.play
         if player2.pos_x >= (self.pos_x - 200)
           if player2.status == 'blocking'
             player2.health -= 2
@@ -185,6 +193,7 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
           end
           hit.execute
@@ -207,6 +216,7 @@ module FightingGame
             if player2.health <= 0
               player2.knockout!
               self.victory!
+              @win.play
             end
           end
           hit.execute
@@ -263,14 +273,11 @@ end
     end
 
     def hit!
-      # hit = Concurrent::ScheduledTask.new(0.4)do
       @pos_y = 335
       @tiles.hit! do
         @busy = false
         idle!
       end
-      # end
-      # hit.execute
     end
 
     def crouch!
