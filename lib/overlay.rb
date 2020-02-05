@@ -7,8 +7,8 @@ module FightingGame
       @window = window
       @healthbar1 = Healthbar.new player1, @window
       @healthbar2 = Healthbar.new player2, @window
-      @specialbar2 = SpecialBar.new player2, @window
-      @specialbar1 = SpecialBar.new player1, @window
+      # @specialbar2 = SpecialBar.new player2, @window
+      # @specialbar1 = SpecialBar.new player1, @window
       @time = Gosu::milliseconds
       @p1name = Gosu::Image.from_text(@window, "#{@player1.name.capitalize}", Gosu.default_font_name, 45)
       @p2name = Gosu::Image.from_text(@window, "#{@player2.name.capitalize}", Gosu.default_font_name, 45)
@@ -24,8 +24,8 @@ module FightingGame
     end
 
     def draw
-      @specialbar1.draw
-      @specialbar2.draw
+      # @specialbar1.draw
+      # @specialbar2.draw
       @healthbar1.draw
       @healthbar2.draw
       @p1name.draw(120, 50, 0)
