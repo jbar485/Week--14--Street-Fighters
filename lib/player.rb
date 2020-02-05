@@ -31,7 +31,7 @@ module FightingGame
       @window = window
       @ex_meter = 10
       @scale = 1
-      
+
 
       move_to flip ? @max_x - 100 - width : 100
       idle!
