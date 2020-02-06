@@ -22,7 +22,12 @@ module FightingGame
       @ex_start = Gosu::Sample.new("assets/sound/ex_start.wav")
       @move_names = ''
       @tiles = Tileset.new(window, name, self)
-      @pos_y = 335
+      if @name == 'akuma'
+      @master_y = -210
+    else
+      @master_y = 335
+    end
+      @pos_y = @master_y
       @crouch_y = 400
       @pos_x = 0
       @flip  = flip
@@ -32,7 +37,20 @@ module FightingGame
       @status = 'idle'
       @window = window
       @ex_meter = 10
+      if @name == "joe"
       @scale = 1
+    elsif @name == "rugal"
+      @scale = 0.9
+    elsif @name == "ken"
+      @scale = 2.5
+    elsif @name =="poolio" || @name == "crimsaur"
+      @scale = 5
+    else
+      @scale = 1
+    end
+
+
+
 
 
       move_to flip ? @max_x - 100 - width : 100
@@ -41,7 +59,7 @@ module FightingGame
 
     def character1!
       @tiles = Tileset.new(@window, 'ken', self)
-      @scale = 3
+      @scale = 2.5
       @name = 'ken'
       @playerchoose.play
     end
@@ -64,14 +82,14 @@ module FightingGame
 
     def character2!
       @tiles = Tileset.new(@window, 'rugal', self)
-      @scale = 1
+      @scale = 0.9
       @name = 'rugal'
       @playerchoose.play
     end
 
     def character3!
       @tiles = Tileset.new(@window, 'joe', self)
-      @scale = 1.1
+      @scale = 1
       @name = 'joe'
       @playerchoose.play
     end
@@ -344,7 +362,7 @@ def special!
     @ex_meter -= 20
   if @status == 'idle'
     @busy = true
-    @pos_y = 335
+    @pos_y = @master_y
     @tiles.special! do
       @busy = false
       idle!
@@ -357,7 +375,7 @@ end
     def idle!
       return if @busy
       @tiles.idle!
-      @pos_y = 335
+      @pos_y = @master_y
       @status = 'idle'
     end
 
@@ -372,20 +390,20 @@ end
 
     def victory!
       @status = 'busy'
-      @pos_y = 335
+      @pos_y = @master_y
       @tiles.victory!
     end
 
     def walking!
       if @status == 'idle'
-        @pos_y = 335
+        @pos_y = @master_y
         @tiles.walking!
         @status = 'busy'
       end
     end
 
     def hit!
-      @pos_y = 335
+      @pos_y = @master_y
       @tiles.hit! do
         @busy = false
         idle!
@@ -406,7 +424,7 @@ end
 
     def blocking!
       if @status == 'idle'
-        @pos_y = 335
+        @pos_y = @master_y
         @tiles.blocking!
         @status = 'blocking'
       end
@@ -415,7 +433,7 @@ end
     def punch!
       if @status == 'idle'
         @busy = true
-        @pos_y = 335
+        @pos_y = @master_y
         @tiles.punch! do
           @busy = false
           idle!
@@ -427,7 +445,7 @@ end
     def kick!
       if @status == 'idle'
         @busy = true
-        @pos_y = 335
+        @pos_y = @master_y
         @tiles.kick! do
           @busy = false
           idle!
