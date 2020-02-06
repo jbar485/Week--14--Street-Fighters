@@ -17,13 +17,13 @@ module FightingGame
     }
 
     PLAYER2 = {
-      'k' => :left,
-      ';' => :right,
-      'p' => :block,
-      'i' => :punch,
-      'u' => :kick,
-      'l' => :crouch,
-      '/' => :special,
+      'j' => :left,
+      'l' => :right,
+      'u' => :block,
+      'o' => :punch,
+      'p' => :kick,
+      'k' => :crouch,
+      '.' => :special,
       '7' => :character2,
       '8' => :character1,
       '9' => :character5,

@@ -9,7 +9,7 @@ module FightingGame
       @music = Gosu::Song.new("assets/music/#{["fight2", "fight1", "fight_theme"].sample}.mp3")
       @music.volume = 0.4
       @backdrop = Backdrop.new(self, "/Cover.png")
-      @player1 = Player.new(self,"cell", false)
+      @player1 = Player.new(self,"joe", false)
       @player2 = Player.new(self, "rugal", true)
       @controls1 = Controls.new(self, @player1, @player2, 1)
       @controls2 = Controls.new(self, @player2, @player1, 2)

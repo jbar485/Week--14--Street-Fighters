@@ -28,6 +28,8 @@ module FightingGame
       @master_y = 310
     elsif @name == 'cell'
       @master_y = 295
+    elsif @name == 'poolio'
+      @master_y = 320
     else
       @master_y = 335
     end
@@ -531,6 +533,8 @@ end
         5.times do
           @player.pos_y -= 15
         end
+      elsif @player.name == 'poolio'
+        @player.pos_y = 220
         end
         @current_animation.play_once &callback
       end
