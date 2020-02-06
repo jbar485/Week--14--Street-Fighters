@@ -421,7 +421,7 @@ end
       if @status == 'idle'
         @tiles.crouch!
         if @name == 'cell'
-        @pos_y = 450
+        @pos_y = 400
       elsif @name =="poolio"
         @pos_y = 375
       elsif @name =="ken"
