@@ -19,14 +19,15 @@ module FightingGame
     PLAYER2 = {
       'k' => :left,
       ';' => :right,
-      'i' => :block,
-      'p' => :punch,
-      '[' => :kick,
+      'p' => :block,
+      'i' => :punch,
+      'u' => :kick,
       'l' => :crouch,
-      'm' => :special,
+      '/' => :special,
       '7' => :character2,
       '8' => :character1,
-      '9' => :character5
+      '9' => :character5,
+      '0' => :character7
     }
 
     def initialize(window, player, player2, num)
@@ -50,6 +51,7 @@ module FightingGame
       when :character4 then @player.character4!
       when :character5 then @player.character5!
       when :character6 then @player.character6!
+      when :character7 then @player.character7!
       end
     end
 

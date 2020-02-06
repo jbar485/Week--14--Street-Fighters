@@ -53,6 +53,14 @@ module FightingGame
       @playerchoose.play
     end
 
+    def character7!
+      @tiles = Tileset.new(@window, 'cell', self)
+      @scale = 1.3
+      @name = 'cell'
+      @playerchoose.play
+    end
+
+
 
     def character2!
       @tiles = Tileset.new(@window, 'rugal', self)
@@ -387,7 +395,11 @@ end
     def crouch!
       if @status == 'idle'
         @tiles.crouch!
+        if @name == 'cell'
+        @pos_y = 450
+      else
         @pos_y = 400
+      end
         @status = 'crouch'
       end
     end
