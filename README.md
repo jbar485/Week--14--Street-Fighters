@@ -53,7 +53,7 @@ _Gosuken is a game we have created where two players fight until one is crowned 
 
 ## Known Bugs
 
-_None_
+_This bad boy works flawlessly. (when using "joe")_
 
 ## Support and contact details
 
