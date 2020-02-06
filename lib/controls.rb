@@ -10,9 +10,9 @@ module FightingGame
       'r' => :kick,
       's' => :crouch,
       'z' => :special,
-      '1' => :character3,
-      '2' => :character4,
-      '3' => :character6
+      '1' => :character1,
+      '2' => :character2,
+      '3' => :character3
 
     }
 
@@ -24,10 +24,9 @@ module FightingGame
       'p' => :kick,
       'k' => :crouch,
       '.' => :special,
-      '7' => :character2,
-      '8' => :character1,
-      '9' => :character5,
-      '0' => :character7
+      '7' => :character4,
+      '8' => :character5,
+      '9' => :character6,
     }
 
     def initialize(window, player, player2, num)

@@ -26,6 +26,8 @@ module FightingGame
       @master_y = -210
     elsif @name == "rugal"
       @master_y = 310
+    elsif @name == "ken"
+      @master_y = 300
     elsif @name == 'cell'
       @master_y = 295
     elsif @name == 'poolio'
@@ -46,7 +48,7 @@ module FightingGame
       if @name == "joe" || @name == "rugal"
       @scale = 1
     elsif @name == "ken"
-      @scale = 2.5
+      @scale = 3
     elsif @name == "cell"
         @scale = 1.5
     elsif @name =="poolio" || @name == "crimsaur"
@@ -64,30 +66,32 @@ module FightingGame
     end
 
     def character1!
-      @tiles = Tileset.new(@window, 'ken', self)
-      @scale = 2.5
-      @name = 'ken'
+      @tiles = Tileset.new(@window, 'joe', self)
+      @master_y = 335
+      @scale = 1
+      @name = 'joe'
       @playerchoose.play
     end
 
-    def character6!
-      @tiles = Tileset.new(@window, 'batman', self)
-      @scale = 2.3
-      @name = 'batman'
-      @playerchoose.play
-    end
-
-    def character7!
+    def character2!
       @tiles = Tileset.new(@window, 'cell', self)
-      @master_y == 295
+      @master_y = 295
       @scale = 1.5
       @name = 'cell'
       @playerchoose.play
     end
 
+    def character3!
+      @tiles = Tileset.new(@window, 'poolio', self)
+      @master_y == 320
+      @scale = 5
+      @name = 'poolio'
+      @playerchoose.play
+    end
 
 
-    def character2!
+
+    def character4!
       @tiles = Tileset.new(@window, 'rugal', self)
       @scale = 1
       @master_y = 310
@@ -95,26 +99,21 @@ module FightingGame
       @playerchoose.play
     end
 
-    def character3!
-      @tiles = Tileset.new(@window, 'joe', self)
-      @scale = 1
-      @name = 'joe'
+    def character5!
+      @tiles = Tileset.new(@window, 'ken', self)
+      @master_y = 300
+      @scale = 3
+      @name = 'ken'
       @playerchoose.play
     end
 
-    def character4!
-      @tiles = Tileset.new(@window, 'cell', self)
+    def character6!
+      @tiles = Tileset.new(@window, 'crimsaur', self)
       @scale = 5
       @name = 'crimsaur'
       @playerchoose.play
     end
 
-    def character5!
-      @tiles = Tileset.new(@window, 'akuma', self)
-      @scale = 5
-      @name = 'poolio'
-      @playerchoose.play
-    end
 
 
 
@@ -423,6 +422,10 @@ end
         @tiles.crouch!
         if @name == 'cell'
         @pos_y = 450
+      elsif @name =="poolio"
+        @pos_y = 375
+      elsif @name =="ken"
+        @pos_y = 375
       else
         @pos_y = 400
       end
