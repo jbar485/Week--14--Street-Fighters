@@ -2,7 +2,7 @@
 module FightingGame
   class Game < Gosu::Window
     def initialize
-      super(800, 600, true)
+      super(800, 600, false)
       self.caption = 'Figther'
       @start =  Gosu::Sample.new("assets/sound/start.wav")
       @start.play

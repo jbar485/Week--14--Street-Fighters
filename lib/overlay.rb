@@ -68,21 +68,23 @@ module FightingGame
       @window = window
     end
     def draw
-      width = @player.ex_meter * 3
+      width = @player.ex_meter * 3.73
       return if width <= 0
       x = @player.flip == false ? 20: @window.width - width - 20
       y = 20
       if @player.ex_meter == 50
         color = Gosu::Color::CYAN
-      @window.draw_quad(x-5, y+547, Gosu::Color::BLACK, x+5+width, y+547, Gosu::Color::BLACK, x+5+width, 2*y+560, Gosu::Color::BLACK, x-5, 2*y+560, Gosu::Color::BLACK, 1)
-      @window.draw_quad(x, y+550, color, x + width, y+550, color, x+width, 3*y+537, color, x, 3*y+537, color, 1)
-    else
-      color = Gosu::Color::GREEN
-      @window.draw_quad(x-5, y+547, Gosu::Color::BLACK, x+5+width, y+547, Gosu::Color::BLACK, x+5+width, 2*y+560, Gosu::Color::BLACK, x-5, 2*y+560, Gosu::Color::BLACK, 1)
-      @window.draw_quad(x, y+550, color, x + width, y+550, color, x+width, 3*y+537, color, x, 3*y+537, color, 1)
-    end
-
-
+        @window.draw_quad(x-5, y+547, Gosu::Color::WHITE, x+5+width, y+547, Gosu::Color::WHITE, x+5+width, 2*y+557, Gosu::Color::WHITE, x-5, 2*y+557, Gosu::Color::WHITE, 1)
+        @window.draw_quad(x, y+550, color, x + width, y+550, color, x+width, 3*y+535, color, x, 3*y+535, color, 1)
+      else
+        color = Gosu::Color::GREEN
+        # @window.draw_quad(x-5, y+547, Gosu::Color::BLACK, x+5+width, y+547, Gosu::Color::BLACK, x+5+width, 2*y+560, Gosu::Color::BLACK, x-5, 2*y+560, Gosu::Color::BLACK, 1)
+        @window.draw_quad(x, y+550, color, x + width, y+550, color, x+width, 3*y+535, color, x, 3*y+535, color, 1)
+      end
+      ex_meter = Gosu::Image.new(@window, "assets/Powerbar-2.gif")
+      ex_meter.draw(14,562, 0)
+      ex_meter2 = Gosu::Image.new(@window, "assets/Powerbar-2.gif")
+      ex_meter2.draw(586,562, 0)
 
     end
   end
