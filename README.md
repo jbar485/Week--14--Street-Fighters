@@ -23,7 +23,7 @@ _Gosuken is a game we have created where two players fight until one is crowned 
 ### Player 1
 
 |  Action | Button  |
-|---|---|---|
+|---|---|
 | Right | d |
 | Left | a |
 | Crouch | s |
@@ -38,7 +38,7 @@ _Gosuken is a game we have created where two players fight until one is crowned 
 ### Player 2
 
 |  Action | Button  |
-|---|---|---|
+|---|---|
 | Right | ; |
 | Left | k |
 | Crouch | l |
