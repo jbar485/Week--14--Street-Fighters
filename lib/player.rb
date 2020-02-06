@@ -24,6 +24,10 @@ module FightingGame
       @tiles = Tileset.new(window, name, self)
       if @name == 'akuma'
       @master_y = -210
+    elsif @name == "rugal"
+      @master_y = 310
+    elsif @name == 'cell'
+      @master_y = 295
     else
       @master_y = 335
     end
@@ -37,12 +41,12 @@ module FightingGame
       @status = 'idle'
       @window = window
       @ex_meter = 10
-      if @name == "joe"
+      if @name == "joe" || @name == "rugal"
       @scale = 1
-    elsif @name == "rugal"
-      @scale = 0.9
     elsif @name == "ken"
       @scale = 2.5
+    elsif @name == "cell"
+        @scale = 1.5
     elsif @name =="poolio" || @name == "crimsaur"
       @scale = 5
     else
@@ -73,7 +77,8 @@ module FightingGame
 
     def character7!
       @tiles = Tileset.new(@window, 'cell', self)
-      @scale = 1.3
+      @master_y == 295
+      @scale = 1.5
       @name = 'cell'
       @playerchoose.play
     end
@@ -82,7 +87,8 @@ module FightingGame
 
     def character2!
       @tiles = Tileset.new(@window, 'rugal', self)
-      @scale = 0.9
+      @scale = 1
+      @master_y = 310
       @name = 'rugal'
       @playerchoose.play
     end
@@ -95,14 +101,14 @@ module FightingGame
     end
 
     def character4!
-      @tiles = Tileset.new(@window, 'crimsaur', self)
+      @tiles = Tileset.new(@window, 'cell', self)
       @scale = 5
       @name = 'crimsaur'
       @playerchoose.play
     end
 
     def character5!
-      @tiles = Tileset.new(@window, 'poolio', self)
+      @tiles = Tileset.new(@window, 'akuma', self)
       @scale = 5
       @name = 'poolio'
       @playerchoose.play
@@ -445,7 +451,11 @@ end
     def kick!
       if @status == 'idle'
         @busy = true
-        @pos_y = @master_y
+        if @name == 'rugal'
+          @pos_y = @master_y + 45
+        else
+          @pos_y = @master_y
+        end
         @tiles.kick! do
           @busy = false
           idle!
