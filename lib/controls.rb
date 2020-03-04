@@ -12,7 +12,6 @@ module FightingGame
       'z' => :special,
       '1' => :character1,
       '2' => :character2,
-      '3' => :character3
 
     }
 
@@ -26,7 +25,6 @@ module FightingGame
       '.' => :special,
       '7' => :character4,
       '8' => :character5,
-      '9' => :character6,
     }
 
     def initialize(window, player, player2, num)

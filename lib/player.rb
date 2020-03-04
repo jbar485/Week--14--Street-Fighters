@@ -30,8 +30,6 @@ module FightingGame
       @master_y = 300
     elsif @name == 'cell'
       @master_y = 295
-    elsif @name == 'poolio'
-      @master_y = 320
     else
       @master_y = 335
     end
@@ -51,8 +49,6 @@ module FightingGame
       @scale = 3
     elsif @name == "cell"
         @scale = 1.5
-    elsif @name =="poolio" || @name == "crimsaur"
-      @scale = 5
     else
       @scale = 1
     end
@@ -81,16 +77,6 @@ module FightingGame
       @playerchoose.play
     end
 
-    def character3!
-      @tiles = Tileset.new(@window, 'poolio', self)
-      @master_y == 320
-      @scale = 5
-      @name = 'poolio'
-      @playerchoose.play
-    end
-
-
-
     def character4!
       @tiles = Tileset.new(@window, 'rugal', self)
       @scale = 1
@@ -106,15 +92,6 @@ module FightingGame
       @name = 'ken'
       @playerchoose.play
     end
-
-    def character6!
-      @tiles = Tileset.new(@window, 'crimsaur', self)
-      @scale = 5
-      @name = 'crimsaur'
-      @playerchoose.play
-    end
-
-
 
 
 
